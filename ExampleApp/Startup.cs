@@ -28,12 +28,16 @@ namespace ExampleApp
 
             services.AddScoped<IExampleRepository, ExampleRepository>();
 
+            services.AddHealthChecks();
+
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseHealthChecks("/health");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

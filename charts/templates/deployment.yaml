@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "exampleapp.fullname" . }}-{{ .Values.image.tag }}
+  name: {{ template "exampleapp.fullname" . }}
   labels:
     app: {{ template "exampleapp.name" . }}
     chart: {{ template "exampleapp.chart" . }}

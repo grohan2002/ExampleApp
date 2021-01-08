@@ -16,5 +16,7 @@ stages:
           - script: |
               cd dev/
 
+              echo $(AWS_ACCESS_KEY_ID)
+              
               terraform init
               terraform apply infra_plan --auto-approve

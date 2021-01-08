@@ -1,22 +1,20 @@
 trigger:
-- master
+  - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+stages:
+  - stage: Apply_Infrastructure
+    jobs:
+      - job: Apply_Terraform
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+        
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: '0.14.3'
 
-variables:
-  buildConfiguration: 'Release'
+          - script: |
+              cd dev/
 
-steps:
-- task: Docker@2
-  inputs:
-    containerRegistry: 'dockerRegistry'
-    repository: '$(dockerRegistry)/$(name)'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/charts'
-    ArtifactName: 'charts'
-    publishLocation: 'Container'
+              terraform init
+              terraform apply infra_plan --auto-approve

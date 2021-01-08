@@ -1,6 +1,9 @@
 trigger:
   - master
 
+variables:
+- group: Test
+
 stages:
   - stage: Apply_Infrastructure
     jobs:
